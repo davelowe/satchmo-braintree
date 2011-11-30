@@ -86,7 +86,12 @@ class PaymentProcessor(BasePaymentProcessor):
                 payment = self.record_authorization(order=order, amount=amount, transaction_id=result.transaction.id)
                 response_text = 'Success'
             else:
-                response_text = 'Fail'
+                response_text = ''
+                for error in result.errors.deep_errors:
+                    if response_text != '':
+                        response_text += ', %s' % error.message
+                    else:
+                        response_text = error.message
                 payment = self.record_failure(amount=amount)
             
             return ProcessorResult(self.key, result.is_success, response_text, payment=payment)
