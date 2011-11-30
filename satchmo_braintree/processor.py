@@ -68,6 +68,7 @@ class PaymentProcessor(BasePaymentProcessor):
                 "customer": {
                     "first_name": order.contact.first_name,
                     "last_name": order.contact.last_name,
+                    "email": order.contact.email,
                 },
                 "billing": {
                     "first_name": order.contact.first_name,
